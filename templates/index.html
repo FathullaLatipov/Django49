@@ -1,10 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
   <title>CodePen - In Bloom: Fruity Ecommerce</title>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
-<link rel='stylesheet' href='https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/gh-pages/css/shop-homepage.css'><link rel="stylesheet" href="./style.css">
+  <link rel='stylesheet' href='https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/gh-pages/css/shop-homepage.css'>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
 
 </head>
 <body>
@@ -75,14 +77,12 @@
             <div class="col-md-3">
                 <p class="lead">in-season-local-regional produce to your door, every monday: because mondays don't have to suck</p>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">Citrus</a>
-                    <a href="#" class="list-group-item">Berries</a>
-                    <a href="#" class="list-group-item">Stone Fruit</a>
-                    <a href="#" class="list-group-item">Melons</a>
-                    <a href="#" class="list-group-item">Tropical</a>
+                    {% for i in categories %}
+                         <a href="#" class="list-group-item">{{ i.category_title }}</a>
+                    {% endfor %}
                 </div>
             </div>
-
+            <img src="{% static 'asdf.jpeg' %}" alt="">
             <div class="col-md-9">
 
                 <div class="row carousel-holder">
@@ -162,7 +162,8 @@
     <!-- /.container -->
 <!-- partial -->
   <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script><script  src="./script.js"></script>
+<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+    <script  src="{% static 'script.js' %}"></script>
 
 </body>
 </html>

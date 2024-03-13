@@ -1,5 +1,9 @@
 from django.shortcuts import render
 
+from products.models import CategoryModel
+
 
 def home_page(request):
-    return render(request, template_name='index.html')
+    categories = CategoryModel.objects.all()
+    context = {'categories': categories}
+    return render(request, template_name='index.html', context=context)
