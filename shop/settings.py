@@ -55,7 +55,7 @@ ROOT_URLCONF = 'shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,8 +115,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+# localhost:8000/static/style.css
 STATIC_URL = 'static/'
+# /User/user/Desktop/django49/static
+STATIC_ROOT = BASE_DIR / 'static'
+
+# /User/user/Desktop/django49/assets
+STATICFILES_DIRS = BASE_DIR / 'assets'
+
+# localhost:8000/media/hello.png
+MEDIA_URL = 'media/'
+# # /User/user/Desktop/django49/media
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
