@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>О продукте</title>
+</head>
+<body>
+Название товара: {{ product.product_title }}<br>
+Количество: {{ product.product_count }}<br>
+Описание: {{ product.product_descriptions }}<br>
+Цена: ${{ product.product_price }}<br>
+Категория: <a href="/category/{{ product.product_category.id }}">{{ product.product_category.id }}</a>
+<img src="{{ product.product_image.url }}" style="width:300px" alt="фото">
+</body>
+</html>

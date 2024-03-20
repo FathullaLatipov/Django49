@@ -84,9 +84,14 @@
         <div class="col-md-3">
             <p class="lead">in-season-local-regional produce to your door, every monday: because mondays don't have to
                 suck</p>
+            <form action="search" method="post">
+                {% csrf_token %}
+                <input type="text" name="search_product">
+                <button type="submit">Search</button>
+            </form>
             <div class="list-group">
                 {% for i in categories %}
-                <a href="#" class="list-group-item">{{ i.category_title }}</a>
+                <a href="/category/{{ i.id }}" class="list-group-item">{{ i.category_title }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -136,7 +141,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ product.product_title }}</h5>
                             <p class="card-text">{{ product.product_descriptions }}</p>
-                            <a href="#" class="btn btn-primary">See more</a>
+                            <a href="/products/{{ product.id }}" class="btn btn-primary">See more</a>
                         </div>
                     </div>
                 </div>
