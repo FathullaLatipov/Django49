@@ -1,9 +1,11 @@
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
+from django.views.generic.list import ListView
 
 from products.models import CategoryModel, ProductModel
 from products.forms import SearchForm
+
 
 def home_page(request):
     categories = CategoryModel.objects.all()
@@ -11,6 +13,17 @@ def home_page(request):
     form = SearchForm
     context = {'categories': categories, 'products': products, 'form': form}
     return render(request, template_name='index.html', context=context)
+
+
+class HomePage(ListView):
+    form = SearchForm
+    template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = CategoryModel.objects.all()
+        context["products"] = ProductModel.objects.all()
+        return context
 
 
 class MyLoginView(LoginView):
