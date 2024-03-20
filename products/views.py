@@ -3,21 +3,23 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 
-from products.models import CategoryModel, ProductModel
+from products.models import CategoryModel, ProductModel, CartModel
 from products.forms import SearchForm
 
 
-def home_page(request):
-    categories = CategoryModel.objects.all()
-    products = ProductModel.objects.all()
-    form = SearchForm
-    context = {'categories': categories, 'products': products, 'form': form}
-    return render(request, template_name='index.html', context=context)
+# def home_page(request):
+#     categories = CategoryModel.objects.all()
+#     products = ProductModel.objects.all()
+#     form = SearchForm
+#     context = {'categories': categories, 'products': products, 'form': form}
+#     return render(request, template_name='index.html', context=context)
 
 
 class HomePage(ListView):
-    form = SearchForm
+    form_class = SearchForm
     template_name = 'index.html'
+    model = ProductModel
+    paginate_by = 1
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -60,3 +62,31 @@ def category_page(request, pk):
     current_products = ProductModel.objects.filter(product_category=category)
     context = {'product': current_products}
     return render(request, 'category.html', context)
+
+
+def add_products_to_user_cart(request, pk):
+    if request.method == 'POST':
+        checker = ProductModel.objects.get(pk=pk)  # 4
+        #     4.10 >= 5
+        if checker.product_count >= int(request.POST.get('pr_count')):
+            CartModel.objects.create(user_id=request.user.id,
+                                     user_product=checker,
+                                     user_product_quantity=int(request.POST.get('pr_count'))
+                                     ).save()
+            print('Success added to cart')
+            return redirect('/user_cart')
+        else:
+            return redirect('/')
+
+
+def user_cart(request):
+    cart = CartModel.objects.filter(user_id=request.user.id)  # 8
+    if request.method == 'POST':
+        main_text = 'Новый заказ\n'
+
+        for i in cart:
+            main_text += f'Товар: {i.user_product}\n' \
+                         f'Кол-во: {i.user_product_quantity}\n' \
+                         f'Покупатель: {i.user_id}\n' \
+                         f'Цена товара: {i.user_product.product_price}\n'
+            # bot.send_message(-12121212, main_text)

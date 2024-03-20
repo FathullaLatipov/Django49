@@ -32,3 +32,17 @@ class ProductModel(models.Model):
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
 
+# Таблица для корзины
+class CartModel(models.Model):
+    user_id = models.IntegerField()
+    user_product = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+    user_product_quantity = models.IntegerField()
+    user_add_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user_id)
+
+    class Meta:
+        verbose_name = 'User cart'
+        verbose_name_plural = 'User carts'
+
