@@ -3,6 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 
+from products.handler import bot
 from products.models import CategoryModel, ProductModel, CartModel
 from products.forms import SearchForm
 
@@ -89,4 +90,17 @@ def user_cart(request):
                          f'Кол-во: {i.user_product_quantity}\n' \
                          f'Покупатель: {i.user_id}\n' \
                          f'Цена товара: {i.user_product.product_price}\n'
-            # bot.send_message(-12121212, main_text)
+            bot.send_message(-1001911637391, main_text)
+            cart.delete()
+            return redirect('/')
+    else:
+        return render(request, template_name='cart.html', context={'cart': cart})
+
+
+def delete_user_cart(request, pk):
+    product_delete = ProductModel.objects.get(pk=pk)
+
+    CartModel.objects.filter(user_id=request.user.id,
+                             user_product=product_delete
+                             ).detele()
+    return redirect('/user_cart')
