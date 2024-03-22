@@ -102,5 +102,5 @@ def delete_user_cart(request, pk):
 
     CartModel.objects.filter(user_id=request.user.id,
                              user_product=product_delete
-                             ).detele()
+                             ).delete()
     return redirect('/user_cart')
