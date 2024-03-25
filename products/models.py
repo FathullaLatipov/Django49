@@ -1,5 +1,6 @@
+from ckeditor.fields import RichTextField
 from django.db import models
-
+from django.utils.translation import gettext_lazy as _
 
 # python manage.py makemigrations
 # Таблица для категорий
@@ -17,11 +18,11 @@ class CategoryModel(models.Model):
 
 #  Таблица для продуктов
 class ProductModel(models.Model):
-    product_title = models.CharField(max_length=50, help_text='Тут добавьте названия товара')
+    product_title = models.CharField(max_length=50, verbose_name=_('product_title'), help_text='Тут добавьте названия товара')
     product_category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE)
     product_price = models.FloatField()
     product_count = models.IntegerField()
-    product_descriptions = models.TextField()
+    product_descriptions = RichTextField()
     product_image = models.FileField(upload_to='product_images')
     product_created_at = models.DateTimeField(auto_now_add=True)
 
